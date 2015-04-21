@@ -4,7 +4,7 @@ require 'pg'
 def self.connect_to_database_prod
   begin
     config = {
-      :adapter  => "pg",
+      :adapter  => "postgresql",
       :host     => "#{ENV["DATABASE_SERVICE_HOST"]}",
       :port     => "#{ENV["DATABASE_SERVICE_PORT"]}",
       :database => "#{ENV["POSTGRESQL_DATABASE"]}"
@@ -32,7 +32,7 @@ end
 def self.connect_to_database_test
   begin
     config = {
-      :adapter  => "pg",
+      :adapter  => "postgresql",
       :host     => "#{ENV["DATABASE_TEST_SERVICE_HOST"]}",
       :port     => "#{ENV["DATABASE_TEST_SERVICE_PORT"]}",
       :database => "#{ENV["POSTGRESQL_DATABASE"]}"
