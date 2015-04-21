@@ -298,7 +298,7 @@
   "metadata": {
     "annotations": {
       "description": "This example shows how to create a simple ruby application in openshift origin v3 with a PostgreSQL database",
-      "tags": "instant-app,ruby,mysql",
+      "tags": "instant-app,ruby,postgresql",
       "iconClass" : "icon-ruby"
     },
     "name": "ruby-helloworld-sample"
