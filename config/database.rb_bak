@@ -1,19 +1,18 @@
 require 'sinatra/activerecord'
-require 'pg'
 
 def self.connect_to_database_prod
   begin
     config = {
-      :adapter  => "pg",
+      :adapter  => "mysql2",
       :host     => "#{ENV["DATABASE_SERVICE_HOST"]}",
       :port     => "#{ENV["DATABASE_SERVICE_PORT"]}",
-      :database => "#{ENV["POSTGRESQL_DATABASE"]}"
+      :database => "#{ENV["MYSQL_DATABASE"]}"
     }
-    if ENV.key?("POSTGRESQL_ROOT_PASSWORD")
-      config[:password] = "#{ENV["POSTGRESQL_ROOT_PASSWORD"]}"
+    if ENV.key?("MYSQL_ROOT_PASSWORD")
+      config[:password] = "#{ENV["MYSQL_ROOT_PASSWORD"]}"
     else
-      config[:username] = "#{ENV["POSTGRESQL_USER"]}"
-      config[:password] = "#{ENV["POSTGRESQL_PASSWORD"]}"
+      config[:username] = "#{ENV["MYSQL_USER"]}"
+      config[:password] = "#{ENV["MYSQL_PASSWORD"]}"
     end
 
     puts "Connecting to production database (#{config[:username]}@#{config[:host]}:#{config[:port]})..."
@@ -22,7 +21,7 @@ def self.connect_to_database_prod
     ActiveRecord::Base.connection.active?
 
   rescue Exception => e
-    if not /Can't connect to POSTGRESQL server/ =~ e.message
+    if not /Can't connect to MySQL server/ =~ e.message
       puts e.message
     end
     return false
@@ -32,16 +31,16 @@ end
 def self.connect_to_database_test
   begin
     config = {
-      :adapter  => "pg",
+      :adapter  => "mysql2",
       :host     => "#{ENV["DATABASE_TEST_SERVICE_HOST"]}",
       :port     => "#{ENV["DATABASE_TEST_SERVICE_PORT"]}",
-      :database => "#{ENV["POSTGRESQL_DATABASE"]}"
+      :database => "#{ENV["MYSQL_DATABASE"]}"
     }
-    if ENV.key?("POSTGRESQL_ROOT_PASSWORD")
-      config[:password] = ENV["POSTGRESQL_ROOT_PASSWORD"]
+    if ENV.key?("MYSQL_ROOT_PASSWORD")
+      config[:password] = ENV["MYSQL_ROOT_PASSWORD"]
     else
-      config[:username] = ENV["POSTGRESQL_USER"]
-      config[:password] = ENV["POSTGRESQL_PASSWORD"]
+      config[:username] = ENV["MYSQL_USER"]
+      config[:password] = ENV["MYSQL_PASSWORD"]
     end
 
     puts "Connecting to test database (#{config[:username]}@#{config[:host]}:#{config[:port]})..."
@@ -50,7 +49,7 @@ def self.connect_to_database_test
     ActiveRecord::Base.connection.active?
 
   rescue Exception => e
-    if not /Can't connect to POSTGRESQL server/ =~ e.message
+    if not /Can't connect to MySQL server/ =~ e.message
       puts e.message
     end
     return false
