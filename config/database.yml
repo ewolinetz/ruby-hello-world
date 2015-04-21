@@ -1,0 +1,27 @@
+<% # Handle old behaviour of official mysql image %>
+<% user = ENV.key?("POSTGRESQL_ROOT_PASSWORD") ? "root" : ENV["POSTGRESQL_USER"] %>
+<% password = ENV.key?("POSTGRESQL_ROOT_PASSWORD") ? ENV["POSTGRESQL_ROOT_PASSWORD"] : ENV["POSTGRESQL_PASSWORD"] %>
+development:
+  adapter: postgresql
+  database: <%= ENV["POSTGRESQL_DATABASE"] %>
+  username: <%= user %>
+  password: <%= password %>
+  host: <%= ENV["DATABASE_SERVICE_HOST"] %>
+  port: <%= ENV["DATABASE_SERVICE_PORT"] %>
+
+test:
+  adapter: postgresql
+  database: <%= ENV["POSTGRESQL_DATABASE"] %>
+  username: <%= user %>
+  password: <%= password %>
+  host: <%= ENV["DATABASE_TEST_SERVICE_HOST"] %>
+  port: <%= ENV["DATABASE_TEST_SERVICE_PORT"] %>
+
+production:
+  adapter: postgresql
+  database: <%= ENV["POSTGRESQL_DATABASE"] %>
+  username: <%= user %>
+  password: <%= password %>
+  host: <%= ENV["DATABASE_SERVICE_HOST"] %>
+  port: <%= ENV["DATABASE_SERVICE_PORT"] %>
+
