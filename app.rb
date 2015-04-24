@@ -16,10 +16,14 @@ def configure_database
     end
   end
   puts "Connected to database"
-  puts "Create database..."
-  %x"rake db:create"
-  puts "Run migrations..."
-  %x"rake db:migrate"
+
+  puts "Checking if database has been initialized..."
+  unless self.check_for_tables_prod
+      puts "Create database..."
+      %x"rake db:create"
+      puts "Run migrations..."
+      %x"rake db:migrate"
+  end
 end
 
 configure do
