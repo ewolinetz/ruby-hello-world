@@ -73,3 +73,7 @@ delete '/keys/:id' do
     "Key not found"
   end
 end
+
+at_exit do
+  self.close_connections
+end

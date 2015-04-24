@@ -60,6 +60,19 @@ def self.check_for_tables_prod
   end
 end
 
+def self.close_connections
+  begin
+
+  ActiveRecord::Base.finish
+
+  rescue Exception => e
+    if not /Can't close connection to POSTGRESQL server/ =~ e.message
+      puts e.message
+    end
+    return false
+  end
+end
+
 def self.connect_to_database_test
   begin
     config = {
